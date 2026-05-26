@@ -1,6 +1,7 @@
-﻿const assert = require('node:assert');
+﻿﻿const assert = require('node:assert');
 const { evaluarNota } = require('./evaluarNota');
 const esPar = require('./esPar');
+const sumaHasta = require('./sumaHasta');
 const { puedeConducir } = require('./puedeConducir');
 const { estadoTemperatura } = require('./temperaturas/estadoTemperatura');
 
@@ -43,6 +44,21 @@ test('evaluarNota invalidas lanza TypeError', () => {
     assert.throws(() => evaluarNota(-1), TypeError);
     assert.throws(() => evaluarNota(12), TypeError);
     assert.throws(() => evaluarNota('diez'), TypeError);
+});
+
+// sumaHasta
+
+test('sumaHasta(3) => 6', () => {
+    assert.strictEqual(sumaHasta(3), 6);
+});
+
+test('sumaHasta(5) => 15', () => {
+    assert.strictEqual(sumaHasta(5), 15);
+});
+
+test('sumaHasta con valores inválidos lanza TypeError', () => {
+    assert.throws(() => sumaHasta(3.5), TypeError);
+    assert.throws(() => sumaHasta(0), TypeError);
 });
 
 // esPar
