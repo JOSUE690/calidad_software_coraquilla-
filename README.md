@@ -1,30 +1,47 @@
-# React + TypeScript + Vite
+# API Adopción de Mascotas — NestJS
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Proyecto con 2 módulos CRUD (Mascota y Adoptante) + tests unitarios de sus services y controllers.
 
-Currently, two official plugins are available:
+## Cómo correrlo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```bash
+npm install
+npm run start:dev      # levanta el servidor en http://localhost:3000
+npm run test           # corre todos los tests unitarios
+npm run test:cov       # corre tests con reporte de cobertura
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Estructura
+
+```
+src/
+├── mascota/
+│   ├── dto/create-mascota.dto.ts
+│   ├── dto/update-mascota.dto.ts
+│   ├── entities/mascota.entity.ts
+│   ├── mascota.controller.ts
+│   ├── mascota.controller.spec.ts   <- test unitario controller
+│   ├── mascota.service.ts
+│   ├── mascota.service.spec.ts      <- test unitario service
+│   └── mascota.module.ts
+├── adoptante/
+│   └── (misma estructura)
+├── app.module.ts
+└── main.ts
+```
+
+## Endpoints
+
+**Mascotas** (`/mascotas`): POST, GET, GET/:id, PATCH/:id, DELETE/:id
+**Adoptantes** (`/adoptantes`): POST, GET, GET/:id, PATCH/:id, DELETE/:id
+
+## Notas
+
+- Se usa almacenamiento en memoria (arrays) en lugar de una base de datos real,
+  para que el proyecto corra sin configuración adicional. Si tu profesor pide
+  persistencia real con TypeORM/PostgreSQL, se puede reemplazar fácilmente el
+  array interno del service por un `Repository<T>` inyectado — la lógica y los
+  tests (mockeando el repositorio en vez del array) se mantienen casi iguales.
+- Los tests de **service** prueban la lógica real (CRUD, errores 404).
+- Los tests de **controller** mockean el service y verifican que cada método
+  del controller invoque correctamente al service correspondiente.
