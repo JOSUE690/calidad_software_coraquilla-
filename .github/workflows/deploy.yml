@@ -16,5 +16,6 @@ jobs:
           host: ${{ secrets.VPS_IP }}
           username: alumnos
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
           source: "."
           target: "/var/www/react-app"
